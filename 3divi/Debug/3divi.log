@@ -1,3 +1,10 @@
-﻿  Main.cpp
+﻿  WuDrawer.cpp
+  Triangle.cpp
+  Point.cpp
+  MathExtention.cpp
+  Main.cpp
+  Line.cpp
+  Bitmap.cpp
+  Создание кода...
   3divi.vcxproj -> C:\Projects\CPP\3divi\Debug\3divi.exe
   3divi.vcxproj -> C:\Projects\CPP\3divi\Debug\3divi.pdb (Full PDB)
