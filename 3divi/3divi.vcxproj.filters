@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Bitmap.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="MathExtention.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="WuDrawer.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Line.cpp">
+      <Filter>Sources\Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="Point.cpp">
+      <Filter>Sources\Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="Triangle.cpp">
+      <Filter>Sources\Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="Matrix.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="BicompFilter.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Bitmap.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="MathExtention.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="WuDrawer.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="BicompFilter.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Line.h">
+      <Filter>Headers\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Point.h">
+      <Filter>Headers\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Triangle.h">
+      <Filter>Headers\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{655dbe4b-1a8e-462e-a653-3d3158512138}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources">
+      <UniqueIdentifier>{9ff913c5-3a13-4205-8495-b1f73444acb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\Primitives">
+      <UniqueIdentifier>{03298ef0-4da0-47c7-a57c-a0350c2b9c08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Primitives">
+      <UniqueIdentifier>{52b387cc-1812-4102-b0c5-c96bd13bf7f5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

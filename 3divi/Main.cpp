@@ -1,10 +1,11 @@
 #include "Bitmap.h"
 #include "Triangle.h"
+#include "BicompFilter.h"
 
 int main(int argc, char* argv[])
 {
 	int fieldSize = 500;
-	double prob = 0.0;
+	double prob = 0.2;
 
 	Bitmap bitmap = Bitmap(fieldSize, fieldSize);
 
@@ -17,7 +18,10 @@ int main(int argc, char* argv[])
 	/*}
 	else if (argv[1] == "restore")
 	{*/
-		bitmap.ReadFromPGM(argv[2]);
+		bitmap.ReadFromPGM("image.pgm");
+		BicompFilter bfilter = BicompFilter(bitmap, 2, 1);
+		Bitmap fBitmap = bfilter.Process();
+		fBitmap.WriteToPGM("result.pgm");
 	/*}*/
 	return 0;
 }

@@ -21,3 +21,7 @@ Point Point::operator-(const Point& a)
 	return Point(x - a.x, y - a.y);
 }
 
+bool Point::operator==(const Point& a)
+{
+	return x == a.x && y == a.y;
+}

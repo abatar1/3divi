@@ -56,8 +56,10 @@ Temporary Items
 *.tlog
 *.suo
 *.user
-*.filter
+*.ilk
 
 *.obj
 *.iobj
 *.exe
+
+*.pgm
