@@ -8,7 +8,7 @@ public:
 
 	Point(double _x, double _y);
 	Point();
-	Point(int fieldSize);
+	Point(const int fieldSize);
 
 	Point operator-(const Point& a);
 	bool operator==(const Point& a);

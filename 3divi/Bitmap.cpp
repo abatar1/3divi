@@ -2,10 +2,12 @@
 #include <fstream>
 #include "Bitmap.h"
 
-Bitmap::Bitmap(int _width, int _height) : Matrix::Matrix(_width, _height) { }
+Bitmap::Bitmap(const int _width, const int _height) : Matrix::Matrix(_width, _height) { }
 
-void Bitmap::Noise(double prob)
+void Bitmap::Noise(const double prob)
 {
+	if (!prob) return;
+
 	random_device rd;
 	mt19937 m(rd());
 	uniform_real<double> distr1(0, 1);

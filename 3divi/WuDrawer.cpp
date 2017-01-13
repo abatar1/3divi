@@ -12,7 +12,7 @@ double WuDrawer::HandleEndpoint(Point point, double gradient, bool steep, Point&
 {
 	int xend = MathExtention::Round(point.x);
 	double yend = point.y + gradient*(xend - point.x);
-	double xgap = 1 - MathExtention::FloatP(point.x + 0.5);
+	double xgap = MathExtention::FloatP(point.x + 0.5);
 
 	pxl = Point(xend, int(yend));
 
@@ -40,7 +40,6 @@ void WuDrawer::Process(Line line)
 
 	double dx = line.end.x - line.start.x;
 	double dy = line.end.y - line.start.y;
-
 	double gradient = dy / dx;
 
 	Point xpl1, xpl2;

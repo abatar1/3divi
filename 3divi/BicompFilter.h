@@ -5,7 +5,6 @@
 class BicompFilter
 {
 	int step;
-	int corners;
 	Matrix color;
 	Bitmap bitmap;
 
@@ -13,15 +12,14 @@ class BicompFilter
 	{
 		int count;
 		int currentColor;
-		Point p;
 
 		Island(int _count, int _curColor);
 		bool operator<(const Island& i) const;
 	};
 
 	int FloodFill(int curColor, Point pivot);
-
+	bool CheckPoint(Point point);
 public:
-	BicompFilter(Bitmap _bitmap, int _step, int _corners);
+	BicompFilter(Bitmap _bitmap, int _step);
 	Bitmap Process();
 };

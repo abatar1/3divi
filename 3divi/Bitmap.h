@@ -5,8 +5,8 @@
 class Bitmap : public Matrix
 {
 public:
-	Bitmap(int _width, int _height);
-	void Noise(double prob);
+	Bitmap(const int _width, const int _height);
+	void Noise(const double prob);
 	void WriteToPGM(std::string filename);
 	void ReadFromPGM(std::string filename);
 };

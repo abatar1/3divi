@@ -14,7 +14,8 @@ private:
 	double FindAngle(Line ab, Line bc);
 
 public:
-	Triangle(int fieldSize);
+	Triangle(const int fieldSize);
 	bool IsAllowed();
 	Bitmap DrawOn(Bitmap bitmap);
+	Triangle GetFromBitmap(Bitmap bitmap);
 };

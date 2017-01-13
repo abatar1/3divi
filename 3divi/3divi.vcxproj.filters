@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Bitmap.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
     <ClCompile Include="MathExtention.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
@@ -20,24 +17,21 @@
     <ClCompile Include="Triangle.cpp">
       <Filter>Sources\Primitives</Filter>
     </ClCompile>
-    <ClCompile Include="Matrix.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
     <ClCompile Include="BicompFilter.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="Bitmap.cpp">
+      <Filter>Sources\Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="Matrix.cpp">
+      <Filter>Sources\Containers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Bitmap.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
     <ClInclude Include="MathExtention.h">
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="WuDrawer.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="BicompFilter.h">
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="Line.h">
@@ -49,8 +43,14 @@
     <ClInclude Include="Triangle.h">
       <Filter>Headers\Primitives</Filter>
     </ClInclude>
-    <ClInclude Include="Matrix.h">
+    <ClInclude Include="BicompFilter.h">
       <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Bitmap.h">
+      <Filter>Headers\Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix.h">
+      <Filter>Headers\Containers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -65,6 +65,12 @@
     </Filter>
     <Filter Include="Sources\Primitives">
       <UniqueIdentifier>{52b387cc-1812-4102-b0c5-c96bd13bf7f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\Containers">
+      <UniqueIdentifier>{6c5526b5-d965-4670-b80a-8f2853d179f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Containers">
+      <UniqueIdentifier>{ba3f4629-06d9-4be1-a504-c0932432e722}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

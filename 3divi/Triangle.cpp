@@ -4,7 +4,7 @@
 
 Triangle::Triangle(Point _a, Point _b, Point _c) : a(_a), b(_b), c(_c) {}
 
-Triangle::Triangle(int fieldSize)
+Triangle::Triangle(const int fieldSize)
 {
 	Triangle t = Triangle(Point(fieldSize), Point(fieldSize), Point(fieldSize));
 	while (!t.IsAllowed())
@@ -38,4 +38,25 @@ Bitmap Triangle::DrawOn(Bitmap bitmap)
 	drawer.Process(Line(a, c));
 	drawer.Process(Line(b, c));
 	return drawer.bitmap;
+}
+
+Triangle Triangle::GetFromBitmap(Bitmap bitmap)
+{
+	for (int x = 0; x < bitmap.Width(); x++)
+	{
+		int pointCounter = 0;
+		for (int y = 0; y < bitmap.Height(); y++)
+		{
+			Point point = Point(x, y);
+			if (bitmap[point] != 0)
+			{
+				pointCounter++;
+				if (pointCounter == 2) continue;
+
+			}
+		}
+	}
+		
+
+	return 0;
 }

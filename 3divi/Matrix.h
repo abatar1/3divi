@@ -22,7 +22,7 @@ protected:
 	};
 
 public:
-	Matrix(int _width, int _height);
+	Matrix(const int _width, const int _height);
 	Matrix operator=(const Matrix& b);
 	Proxy operator[](Point indexer);
 	int Width();
