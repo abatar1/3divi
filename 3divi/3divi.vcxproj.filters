@@ -23,9 +23,6 @@
     <ClCompile Include="Bitmap.cpp">
       <Filter>Sources\Containers</Filter>
     </ClCompile>
-    <ClCompile Include="Matrix.cpp">
-      <Filter>Sources\Containers</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MathExtention.h">

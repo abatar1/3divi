@@ -7,7 +7,7 @@
 int main(int argc, char* argv[])
 {
 	const int fieldSize = 500;
-	double prob = 0.0;
+	double prob = 0.3;
 	clock_t timer1, timer2;
 	/*if (argv[1] == "generator")
 	{*/
@@ -25,7 +25,7 @@ int main(int argc, char* argv[])
 		timer1 = clock();
 		Bitmap newBitmap = Bitmap(fieldSize, fieldSize);
 		newBitmap.ReadFromPGM("image.pgm");
-		BicompFilter bfilter = BicompFilter(newBitmap, 2);
+		BicompFilter bfilter = BicompFilter(newBitmap, 3);
 		Bitmap fBitmap = bfilter.Process();
 		fBitmap.WriteToPGM("result.pgm");
 		timer2 = clock();

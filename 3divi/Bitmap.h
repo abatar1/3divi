@@ -2,7 +2,7 @@
 #include <string>
 #include "Matrix.h"
 
-class Bitmap : public Matrix
+class Bitmap : public Matrix<unsigned char>
 {
 public:
 	Bitmap(const int _width, const int _height);

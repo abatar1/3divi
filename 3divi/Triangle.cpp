@@ -56,7 +56,5 @@ Triangle Triangle::GetFromBitmap(Bitmap bitmap)
 			}
 		}
 	}
-		
-
 	return 0;
 }

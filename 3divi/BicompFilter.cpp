@@ -17,26 +17,33 @@ bool BicompFilter::CheckPoint(Point point)
 
 int BicompFilter::FloodFill(int currentColor, Point pivot)
 {
-	int count = 1;
+	vector<Point> allowedNeighbors = vector<Point>();
 	vector<Point> lookup = vector<Point>();
 	lookup.push_back(pivot);	
+	int count = 1;
 
-	while (lookup.size() > 0)
+	while (1)
 	{
-		Point current = lookup.back();
-		lookup.pop_back();
-
-		if (color[current] != 0) 
-			continue;
-		color[current] = currentColor;
-		count++;
-		for (int x = max(int(current.x) - step, 0); x < min(int(current.x) + step, bitmap.Width()); x++)
-			for (int y = max(int(current.y) - step, 0); y < min(int(current.y) + step, bitmap.Width()); y++)
-			{
-				Point p = Point(x, y);
-				if (CheckPoint(p))
-					lookup.push_back(p);
-			}
+		int layerCount = 0;
+		for (auto current : lookup)
+		{
+			color[current] = currentColor;			
+			for (int x = max(int(current.x) - step, 0); x < min(int(current.x) + step, bitmap.Width()); x++)
+				for (int y = max(int(current.y) - step, 0); y < min(int(current.y) + step, bitmap.Height()); y++)
+				{
+					Point p = Point(x, y);
+					if (CheckPoint(p))
+					{
+						allowedNeighbors.push_back(p);
+						color[p] = currentColor;
+						layerCount++;
+					}
+				}
+		}
+		if (!layerCount) break;
+		count += layerCount;
+		lookup = vector<Point>(allowedNeighbors);
+		allowedNeighbors.clear();
 	}
 	return count;
 }

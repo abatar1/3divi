@@ -5,7 +5,7 @@
 class BicompFilter
 {
 	int step;
-	Matrix color;
+	Matrix<int> color;
 	Bitmap bitmap;
 
 	struct Island

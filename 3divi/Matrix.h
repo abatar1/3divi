@@ -4,27 +4,60 @@
 
 using namespace std;
 
+template <class Type>
 class Matrix
 {
 protected:
-	vector<vector<unsigned char>> matrix;
+	vector<vector<Type>> matrix;
 	int width;
 	int height;
 
 	struct Proxy
 	{
-		Matrix& b;
+		Matrix<Type>& b;
 		Point indexer;
 
-		Proxy(Matrix& _matrix, Point _indexer);
-		operator unsigned char();
-		unsigned char& operator=(const unsigned char& other);
+		Proxy(Matrix& _bitmap, Point _indexer) : b(_bitmap), indexer(_indexer) { }
+
+		operator int()
+		{
+			return b.matrix[int(indexer.x)][int(indexer.y)];
+		}
+
+		Type& operator=(const Type& other)
+		{
+			return b.matrix[int(indexer.x)][int(indexer.y)] = other;
+		};
 	};
 
 public:
-	Matrix(const int _width, const int _height);
-	Matrix operator=(const Matrix& b);
-	Proxy operator[](Point indexer);
-	int Width();
-	int Height();
+	Matrix(int _width, int _height) : width(_width), height(_height)
+	{
+		matrix = vector<vector<Type>>(
+			height,
+			vector<Type>(width, 0));
+	}
+
+	Matrix operator=(const Matrix& b)
+	{
+		matrix = b.matrix;
+		width = b.width;
+		height = b.height;
+		return *this;
+	}
+
+	typename Proxy operator[](Point indexer)
+	{
+		return Proxy(*this, indexer);
+	}
+
+	int Width()
+	{
+		return width;
+	}
+
+	int Height()
+	{
+		return height;
+	}
 };
