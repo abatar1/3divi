@@ -23,6 +23,9 @@
     <ClCompile Include="FFT.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="MedianFilter.cpp">
+      <Filter>Sources\Filters</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WuDrawer.h">

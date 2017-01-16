@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "Point.h"
+#include "FFT.h"
 
 template <class Type>
 class Matrix

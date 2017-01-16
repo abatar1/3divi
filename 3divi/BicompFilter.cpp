@@ -9,12 +9,12 @@ bool BicompFilter::Island::operator<(const Island& i) const
 	return count < i.count;
 }
 
-BicompFilter::BicompFilter(Bitmap _bitmap, int _step)
-	: bitmap(_bitmap), color(_bitmap.Width(), _bitmap.Height()), step(_step) { }
+BicompFilter::BicompFilter(Bitmap _bitmap, int _step, int _minshade)
+	: bitmap(_bitmap), color(_bitmap.Width(), _bitmap.Height()), step(_step), minshade(_minshade) { }
 
 bool BicompFilter::CheckPoint(Point point)
 {
-	return color[point] == 0 && bitmap[point] > 50;
+	return color[point] == 0 && bitmap[point] > minshade;
 }
 
 int BicompFilter::FloodFill(int currentColor, Point pivot)
