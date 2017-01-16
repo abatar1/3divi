@@ -8,7 +8,9 @@ class WuDrawer
 private:
 	double HandleEndpoint(Point point, double gradient, bool steep, Point& pxl);
 	void Plot(Point pos, double c);
-
+	double FloatP(double x);
+	double FloatPR(double x);
+	int Round(double x);
 public:
 	Bitmap bitmap;
 	WuDrawer(Bitmap _bitmap);

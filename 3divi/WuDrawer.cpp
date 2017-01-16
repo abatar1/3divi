@@ -1,5 +1,21 @@
 #include "WuDrawer.h"
-#include "MathExtention.h"
+
+double WuDrawer::FloatP(double x)
+{
+	if (x < 0)
+		return 1 - (x - int(x));
+	return x - int(x);
+}
+
+double WuDrawer::FloatPR(double x)
+{
+	return 1 - FloatP(x);
+}
+
+int WuDrawer::Round(double x)
+{
+	return int(x + 0.5);
+}
 
 WuDrawer::WuDrawer(Bitmap _bitmap) : bitmap(_bitmap) { }
 
@@ -10,21 +26,21 @@ void WuDrawer::Plot(Point pos, double c)
 
 double WuDrawer::HandleEndpoint(Point point, double gradient, bool steep, Point& pxl)
 {
-	int xend = MathExtention::Round(point.x);
+	int xend = Round(point.x);
 	double yend = point.y + gradient*(xend - point.x);
-	double xgap = MathExtention::FloatP(point.x + 0.5);
+	double xgap = FloatP(point.x + 0.5);
 
 	pxl = Point(xend, int(yend));
 
 	if (steep)
 	{
-		Plot(Point(pxl.y, pxl.x), MathExtention::FloatPR(yend) * xgap);
-		Plot(Point(pxl.y + 1, pxl.x), MathExtention::FloatP(yend) * xgap);
+		Plot(Point(pxl.y, pxl.x), FloatPR(yend) * xgap);
+		Plot(Point(pxl.y + 1, pxl.x), FloatP(yend) * xgap);
 	}
 	else
 	{
-		bitmap[Point(pxl.x, pxl.y)] = unsigned char(MathExtention::FloatPR(yend) * xgap);
-		bitmap[Point(pxl.x, pxl.y + 1)] = unsigned char(MathExtention::FloatP(yend) * xgap);
+		bitmap[Point(pxl.x, pxl.y)] = unsigned char(FloatPR(yend) * xgap);
+		bitmap[Point(pxl.x, pxl.y + 1)] = unsigned char(FloatP(yend) * xgap);
 	}
 	return yend + gradient;
 }
@@ -50,8 +66,8 @@ void WuDrawer::Process(Line line)
 	{
 		for (int x = int(xpl1.x) + 1; x < xpl2.x - 1; x++)
 		{
-			Plot(Point(int(intery), x), MathExtention::FloatPR(intery));
-			Plot(Point(int(intery) + 1, x), MathExtention::FloatP(intery));
+			Plot(Point(int(intery), x), FloatPR(intery));
+			Plot(Point(int(intery) + 1, x), FloatP(intery));
 			intery = intery + gradient;
 		}
 	}
@@ -59,8 +75,8 @@ void WuDrawer::Process(Line line)
 	{
 		for (int x = int(xpl1.x) + 1; x < xpl2.x - 1; x++)
 		{
-			Plot(Point(x, int(intery)), MathExtention::FloatPR(intery));
-			Plot(Point(x, int(intery) + 1), MathExtention::FloatP(intery));
+			Plot(Point(x, int(intery)), FloatPR(intery));
+			Plot(Point(x, int(intery) + 1), FloatP(intery));
 			intery = intery + gradient;
 		}
 	}

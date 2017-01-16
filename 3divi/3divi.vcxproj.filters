@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="MathExtention.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
     <ClCompile Include="WuDrawer.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
@@ -17,17 +14,17 @@
     <ClCompile Include="Triangle.cpp">
       <Filter>Sources\Primitives</Filter>
     </ClCompile>
-    <ClCompile Include="BicompFilter.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
     <ClCompile Include="Bitmap.cpp">
       <Filter>Sources\Containers</Filter>
     </ClCompile>
+    <ClCompile Include="BicompFilter.cpp">
+      <Filter>Sources\Filters</Filter>
+    </ClCompile>
+    <ClCompile Include="FFT.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MathExtention.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
     <ClInclude Include="WuDrawer.h">
       <Filter>Headers</Filter>
     </ClInclude>
@@ -40,14 +37,20 @@
     <ClInclude Include="Triangle.h">
       <Filter>Headers\Primitives</Filter>
     </ClInclude>
-    <ClInclude Include="BicompFilter.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
     <ClInclude Include="Bitmap.h">
       <Filter>Headers\Containers</Filter>
     </ClInclude>
     <ClInclude Include="Matrix.h">
       <Filter>Headers\Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="BicompFilter.h">
+      <Filter>Headers\Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="MedianFilter.h">
+      <Filter>Headers\Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="FFT.h">
+      <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -68,6 +71,12 @@
     </Filter>
     <Filter Include="Sources\Containers">
       <UniqueIdentifier>{ba3f4629-06d9-4be1-a504-c0932432e722}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\Filters">
+      <UniqueIdentifier>{fd4745a7-030a-4570-a59e-c17d1f9f2559}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Filters">
+      <UniqueIdentifier>{0f664fe7-c4cd-453a-9fe6-b5c3f66e0332}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -2,13 +2,11 @@
 #include <vector>
 #include "Point.h"
 
-using namespace std;
-
 template <class Type>
 class Matrix
 {
 protected:
-	vector<vector<Type>> matrix;
+	std::vector<std::vector<Type>> matrix;
 	int width;
 	int height;
 
@@ -33,7 +31,7 @@ protected:
 public:
 	Matrix(int _width, int _height) : width(_width), height(_height)
 	{
-		matrix = vector<vector<Type>>(
+		matrix = std::vector<std::vector<Type>>(
 			height,
 			vector<Type>(width, 0));
 	}

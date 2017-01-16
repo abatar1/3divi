@@ -1,5 +1,7 @@
 #include "BicompFilter.h"
 
+using namespace std;
+
 BicompFilter::Island::Island(int _count, int _curColor) : count(_count), currentColor(_curColor) { }
 
 bool BicompFilter::Island::operator<(const Island& i) const

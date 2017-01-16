@@ -2,6 +2,8 @@
 #include <fstream>
 #include "Bitmap.h"
 
+using namespace std;
+
 Bitmap::Bitmap(const int _width, const int _height) : Matrix::Matrix(_width, _height) { }
 
 void Bitmap::Noise(const double prob)

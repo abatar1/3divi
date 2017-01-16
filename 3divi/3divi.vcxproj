@@ -144,9 +144,9 @@
   <ItemGroup>
     <ClCompile Include="BicompFilter.cpp" />
     <ClCompile Include="Bitmap.cpp" />
+    <ClCompile Include="FFT.cpp" />
     <ClCompile Include="Line.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="MathExtention.cpp" />
     <ClCompile Include="Point.cpp" />
     <ClCompile Include="Triangle.cpp" />
     <ClCompile Include="WuDrawer.cpp" />
@@ -154,9 +154,10 @@
   <ItemGroup>
     <ClInclude Include="BicompFilter.h" />
     <ClInclude Include="Bitmap.h" />
+    <ClInclude Include="FFT.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="Line.h" />
-    <ClInclude Include="MathExtention.h" />
+    <ClInclude Include="MedianFilter.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="Triangle.h" />
     <ClInclude Include="WuDrawer.h" />
