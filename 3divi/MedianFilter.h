@@ -6,13 +6,12 @@ using namespace std;
 
 class MedianFilter
 {
-	Bitmap bitmap;
 	int step;
 	int thresold;
 	int count;
 
-	int CountNeighbors(Point current);
+	int CountNeighbors(Bitmap bitmap, Point current);
 public:
-	MedianFilter(Bitmap _bitmap, int _step, int _thresold, int _count);
-	Bitmap Process();
+	MedianFilter(int _step, int _thresold, int _count);
+	Bitmap Process(Bitmap bitmap);
 };

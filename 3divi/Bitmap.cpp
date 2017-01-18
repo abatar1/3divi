@@ -1,5 +1,6 @@
 #include <random> 
 #include <fstream>
+#include <cmath>
 #include "Bitmap.h"
 
 using namespace std;
@@ -17,6 +18,17 @@ void Bitmap::Noise(const double prob)
 	for (int i = 0; i < height; i++)
 		for (int j = 0; j < width; j++)
 			if (distr1(m) - prob < 0) matrix[i][j] = distr2(m);
+}
+
+double Bitmap::GetNoise() const
+{
+	int n = width * height;
+	double sb = 0;
+
+	for (int x = 0; x < width; x++)
+		for (int y = 0; y < height; y++) sb += matrix[y][x];
+
+	return floor(sb / n / 255 * 2 * 100) / 100;
 }
 
 void Bitmap::WriteToPGM(string filename)

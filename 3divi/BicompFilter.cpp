@@ -9,15 +9,15 @@ bool BicompFilter::Island::operator<(const Island& i) const
 	return count < i.count;
 }
 
-BicompFilter::BicompFilter(Bitmap _bitmap, int _step, int _minshade)
-	: bitmap(_bitmap), color(_bitmap.Width(), _bitmap.Height()), step(_step), minshade(_minshade) { }
+BicompFilter::BicompFilter(int _step, int _minshade)
+	: step(_step), minshade(_minshade) { }
 
-bool BicompFilter::CheckPoint(Point point)
+bool BicompFilter::CheckPoint(Bitmap bitmap, Matrix<int> color, Point point)
 {
 	return color[point] == 0 && bitmap[point] > minshade;
 }
 
-int BicompFilter::FloodFill(int currentColor, Point pivot)
+int BicompFilter::FloodFill(Bitmap bitmap, Matrix<int> color, int currentColor, Point pivot)
 {
 	vector<Point> allowedNeighbors = vector<Point>();
 	vector<Point> lookup = vector<Point>();
@@ -34,7 +34,7 @@ int BicompFilter::FloodFill(int currentColor, Point pivot)
 				for (int y = max(int(current.y) - step, 0); y < min(int(current.y) + step, bitmap.Height()); y++)
 				{
 					Point p = Point(x, y);
-					if (CheckPoint(p))
+					if (CheckPoint(bitmap, color, p))
 					{
 						allowedNeighbors.push_back(p);
 						color[p] = currentColor;
@@ -50,19 +50,20 @@ int BicompFilter::FloodFill(int currentColor, Point pivot)
 	return count;
 }
 
-Bitmap BicompFilter::Process()
+Bitmap BicompFilter::Process(Bitmap bitmap)
 {
 	int currentColor = 1;
 	vector<Island> islands = vector<Island>();
 	Bitmap rbitmap = bitmap;
+	Matrix<int> color = Matrix<int>(bitmap.Width(), bitmap.Height());
 
 	for (int x = 0; x < bitmap.Width(); x++)
 		for (int y = 0; y < bitmap.Height(); y++)
 		{
 			Point p = Point(x, y);
-			if (CheckPoint(p))
+			if (CheckPoint(bitmap, color, p))
 			{
-				int count = FloodFill(currentColor, p);
+				int count = FloodFill(bitmap, color, currentColor, p);
 				if (count > 1)
 				{
 					islands.push_back(Island(count, currentColor));

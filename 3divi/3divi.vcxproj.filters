@@ -26,6 +26,9 @@
     <ClCompile Include="HoughTransformator.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="MainFilter.h">
+      <Filter>Headers\Filters</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WuDrawer.h">
