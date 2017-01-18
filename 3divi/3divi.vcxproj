@@ -147,7 +147,7 @@
     <ClCompile Include="HoughTransformator.cpp" />
     <ClCompile Include="Line.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="MainFilter.h" />
+    <ClCompile Include="MainFilter.cpp" />
     <ClCompile Include="MedianFilter.cpp" />
     <ClCompile Include="Point.cpp" />
     <ClCompile Include="Triangle.cpp" />
@@ -157,6 +157,7 @@
     <ClInclude Include="BicompFilter.h" />
     <ClInclude Include="Bitmap.h" />
     <ClInclude Include="HoughTransformator.h" />
+    <ClInclude Include="MainFilter.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="Line.h" />
     <ClInclude Include="MedianFilter.h" />

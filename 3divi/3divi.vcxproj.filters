@@ -26,8 +26,8 @@
     <ClCompile Include="HoughTransformator.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="MainFilter.h">
-      <Filter>Headers\Filters</Filter>
+    <ClCompile Include="MainFilter.cpp">
+      <Filter>Sources\Filters</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -57,6 +57,9 @@
     </ClInclude>
     <ClInclude Include="HoughTransformator.h">
       <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="MainFilter.h">
+      <Filter>Headers\Filters</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

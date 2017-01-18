@@ -1,13 +1,13 @@
 #include "MedianFilter.h"
 
-MedianFilter::MedianFilter(int _step, int _thresold, int _count)
-	: step(_step), thresold(_thresold), count(_count) { }
+MedianFilter::MedianFilter(Bitmap _bitmap, int _step, int _thresold, int _count)
+	:bitmap(_bitmap), step(_step), thresold(_thresold), count(_count) { }
 
-int MedianFilter::CountNeighbors(Bitmap bitmap, Point current)
+int MedianFilter::CountNeighbors(Point current)
 {
 	int count = 0;
-	for (int x = max(int(current.x) - step, 0); x < min(int(current.x) + step, bitmap.Width()); x++)
-		for (int y = max(int(current.y) - step, 0); y < min(int(current.y) + step, bitmap.Height()); y++)
+	for (int x = std::max(int(current.x) - step, 0); x < std::min(int(current.x) + step, bitmap.Width()); x++)
+		for (int y = std::max(int(current.y) - step, 0); y < std::min(int(current.y) + step, bitmap.Height()); y++)
 		{
 			Point p = Point(x, y);
 			if (bitmap[p] != 0)
@@ -16,7 +16,7 @@ int MedianFilter::CountNeighbors(Bitmap bitmap, Point current)
 	return count;
 }
 
-Bitmap MedianFilter::Process(Bitmap bitmap)
+Bitmap MedianFilter::Process()
 {
 	Bitmap result = bitmap;
 	for (int k = 0; k < count; k++)
@@ -25,7 +25,7 @@ Bitmap MedianFilter::Process(Bitmap bitmap)
 			for (int y = 0; y < bitmap.Height(); y++)
 			{
 				Point p = Point(x, y);
-				if (CountNeighbors(bitmap, p) < thresold) result[p] = 0;
+				if (CountNeighbors(p) < thresold) result[p] = 0;
 			}
 	}
 	
