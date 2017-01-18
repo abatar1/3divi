@@ -30,13 +30,13 @@ int main(int argc, char* argv[])
 		Bitmap newBitmap = Bitmap(fieldSize, fieldSize);
 		newBitmap.ReadFromPGM("image.pgm");
 
-		MedianFilter mfilter = MedianFilter(newBitmap, 2, 6, 1);
+		MedianFilter mfilter = MedianFilter(newBitmap, 2, 6, 2);
 		Bitmap fBitmap = mfilter.Process();
 
-		BicompFilter bfilter = BicompFilter(fBitmap, 3, 50);
+		BicompFilter bfilter = BicompFilter(fBitmap, 3, 0);
 		fBitmap = bfilter.Process();
 
-		mfilter = MedianFilter(fBitmap, 2, 5, 2);
+		mfilter = MedianFilter(fBitmap, 2, 6, 2);
 		fBitmap = mfilter.Process();
 
 		fBitmap.WriteToPGM("result.pgm");

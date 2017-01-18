@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="WuDrawer.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Line.cpp">
       <Filter>Sources\Primitives</Filter>
@@ -20,11 +17,14 @@
     <ClCompile Include="BicompFilter.cpp">
       <Filter>Sources\Filters</Filter>
     </ClCompile>
-    <ClCompile Include="FFT.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
     <ClCompile Include="MedianFilter.cpp">
       <Filter>Sources\Filters</Filter>
+    </ClCompile>
+    <ClCompile Include="WuDrawer.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="HoughTransformator.cpp">
+      <Filter>Sources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -52,7 +52,7 @@
     <ClInclude Include="MedianFilter.h">
       <Filter>Headers\Filters</Filter>
     </ClInclude>
-    <ClInclude Include="FFT.h">
+    <ClInclude Include="HoughTransformator.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

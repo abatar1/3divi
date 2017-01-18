@@ -1,7 +1,6 @@
 #pragma once
 #include <vector>
 #include "Point.h"
-#include "FFT.h"
 
 template <class Type>
 class Matrix
@@ -34,7 +33,7 @@ public:
 	{
 		matrix = std::vector<std::vector<Type>>(
 			height,
-			vector<Type>(width, 0));
+			std::vector<Type>(width, 0));
 	}
 
 	Matrix operator=(const Matrix& b)
