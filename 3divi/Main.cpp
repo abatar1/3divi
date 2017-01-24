@@ -7,7 +7,7 @@
 int main(int argc, char* argv[])
 {
 	const int fieldSize = 500;
-	double prob = 0.3;
+	double prob = 0.1;
 	clock_t timer1, timer2;
 	/*if (argv[1] == "generator")
 	{*/
@@ -28,11 +28,11 @@ int main(int argc, char* argv[])
 
 		Bitmap newBitmap = Bitmap(fieldSize, fieldSize);
 		newBitmap.ReadFromPGM("image.pgm");
-
-		MainFilter mFilter = MainFilter();
-		newBitmap = mFilter.Process(newBitmap);
-
-		newBitmap.WriteToPGM("result.pgm");
+		MainFilter mFilter = MainFilter(newBitmap);
+		newBitmap = mFilter.Process();
+		Triangle triangle1 = Triangle();
+		triangle.GetFromBitmap(newBitmap, 175);	
+		triangle.ToFile("output.txt");
 
 		timer2 = clock();
 		std::cout << (timer2 - timer1) / (CLOCKS_PER_SEC / 1000) << "ms" << std::endl;

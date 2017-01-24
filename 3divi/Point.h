@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 
 class Point
 {
@@ -12,4 +13,6 @@ public:
 
 	Point operator-(const Point& a);
 	bool operator==(const Point& a);
+
+	std::string ToString();
 };

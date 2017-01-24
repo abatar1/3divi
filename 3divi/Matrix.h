@@ -19,16 +19,21 @@ protected:
 
 		operator int()
 		{
-			return b.matrix[int(indexer.x)][int(indexer.y)];
+			return b.matrix[int(indexer.y)][int(indexer.x)];
 		}
 
 		Type& operator=(const Type& other)
 		{
-			return b.matrix[int(indexer.x)][int(indexer.y)] = other;
+			return b.matrix[int(indexer.y)][int(indexer.x)] = other;
 		};
 	};
 
 public:
+	Matrix() : width(0) , height(0)
+	{
+		matrix = std::vector<std::vector<Type>>();
+	}
+
 	Matrix(int _width, int _height) : width(_width), height(_height)
 	{
 		matrix = std::vector<std::vector<Type>>(

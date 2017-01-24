@@ -1,11 +1,11 @@
 #pragma once
 #include "Bitmap.h"
+#include "Line.h"
 #include <vector>
 
 class HoughTransformator
 {
-	Bitmap bitmap;
-
+private:
 	struct Cache
 	{
 		double sinT;
@@ -14,10 +14,12 @@ class HoughTransformator
 		Cache(double theta);
 		Cache();
 	};
-
-	std::vector<Cache> CreateTable();
-
+	const int degrees = 180;
+	Matrix<unsigned int> accumulator;
+	std::vector<Cache> caches;
+	Bitmap bitmap;	
 public:
-	HoughTransformator(Bitmap _bitmap);
-	void Process();
+	HoughTransformator(Bitmap bitmap);
+	Matrix<unsigned int> Transform();
+	std::vector<Line> GetLines(int threshold);
 };

@@ -1,6 +1,11 @@
 #define _USE_MATH_DEFINES
+#include <fstream>
+#include <iostream>
 #include "Triangle.h"
 #include "WuDrawer.h"
+#include "HoughTransformator.h"
+
+Triangle::Triangle() : a(0), b(0), c(0) {}
 
 Triangle::Triangle(Point _a, Point _b, Point _c) : a(_a), b(_b), c(_c) {}
 
@@ -40,21 +45,39 @@ Bitmap Triangle::DrawOn(Bitmap bitmap)
 	return drawer.bitmap;
 }
 
-Triangle Triangle::GetFromBitmap(Bitmap bitmap)
+Point Triangle::FindIntersection(Line ab, Line bc)
 {
-	for (int x = 0; x < bitmap.Width(); x++)
-	{
-		int pointCounter = 0;
-		for (int y = 0; y < bitmap.Height(); y++)
-		{
-			Point point = Point(x, y);
-			if (bitmap[point] != 0)
-			{
-				pointCounter++;
-				if (pointCounter == 2) continue;
+	Point s1 = ab.end - ab.start;
+	Point s2 = bc.end - bc.start;
+	double t = (s2.x * (ab.start.y - bc.start.y) - s2.y * (ab.start.x - bc.start.x)) / (-s2.x * s1.y + s1.x * s2.y);
 
-			}
-		}
-	}
-	return 0;
+	return Point(ab.start.x + (t * s1.x), ab.start.y + (t * s1.y));
+}
+
+Triangle Triangle::GetFromBitmap(Bitmap bitmap, int threshold)
+{
+	HoughTransformator ht = HoughTransformator(bitmap);
+	Matrix<unsigned int> accum = ht.Transform();
+	std::vector<Line> lines = ht.GetLines(threshold);
+	Point a = FindIntersection(lines[0], lines[1]);
+	Point b = FindIntersection(lines[0], lines[2]);
+	Point c = FindIntersection(lines[1], lines[2]);
+
+	return Triangle(a, b, c);
+}
+
+void Triangle::ToString()
+{
+	std::cout << a.ToString() << std::endl;
+	std::cout << b.ToString() << std::endl;
+	std::cout << c.ToString() << std::endl;
+}
+
+void Triangle::ToFile(std::string filename)
+{
+	std::ofstream file(filename, std::ios::out);
+	file << a.ToString() << std::endl;
+	file << b.ToString() << std::endl;
+	file << c.ToString() << std::endl;
+	file.close();
 }

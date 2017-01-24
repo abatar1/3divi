@@ -1,60 +1,106 @@
-#pragma once
 #define _USE_MATH_DEFINES
+#include <algorithm>
 #include "Matrix.h"
 #include "HoughTransformator.h"
-#include <cmath>
 
 HoughTransformator::Cache::Cache(double theta)
 {
-	sinT = sin(theta);
-	cosT = cos(theta);
+	double deg2rad = M_PI / 180.0;
+	sinT = sin(theta * deg2rad);
+	cosT = cos(theta * deg2rad);
 }
-	
+
 HoughTransformator::Cache::Cache()
 {
 	sinT = 0;
 	cosT = 0;
 }
 
-std::vector<HoughTransformator::Cache> HoughTransformator::CreateTable()
+HoughTransformator::HoughTransformator(Bitmap _bitmap) : bitmap(_bitmap)
 {
-	std::vector<Cache> table = std::vector<Cache>(181);
-	double rad = (M_PI / 180);
-	double theta = rad * -90;
-	for (int i = 0; i < 181; i++)
-	{
-		table[i] = Cache(theta);
-		theta += rad;
-	}
-	return table;
+	int bitmapH = bitmap.Height();
+	int bitmapW = bitmap.Width();
+	int hough_h = (int)((sqrt(2) * (double)(bitmapH > bitmapW ? bitmapH : bitmapW)) / 2);
+
+	accumulator = Matrix<unsigned int>(degrees, hough_h * 2);
+	caches = std::vector<Cache>(degrees);
+	for (int i = 0; i < degrees; i++) caches[i] = Cache(i);
 }
 
-HoughTransformator::HoughTransformator(Bitmap _bitmap) : bitmap(_bitmap) { }
-
-void HoughTransformator::Process()
+Matrix<unsigned int> HoughTransformator::Transform()
 {
-	int D = (int)(sqrt(bitmap.Width() ^ 2 + bitmap.Height() ^ 2));
-	Matrix<unsigned char> houghSpace = Matrix<unsigned char>(181, ((int)(1.414213562 * D) * 2) + 1);
+	int center_x = bitmap.Width() / 2;
+	int center_y = bitmap.Height() / 2;
+	int hough_h = accumulator.Height() / 2;
 
-	int xpoint = 0;
-	unsigned char maxT = 0;
-	std::vector<Cache> table = CreateTable();
-	for (int x = 0; x < bitmap.Width(); x++)
-		for (int y = 0; y < bitmap.Height(); y++)
+	for (int y = 0; y < bitmap.Height(); y++)
+		for (int x = 0; x < bitmap.Width(); x++)
 		{
-			if (bitmap[x, y] == 0) continue;
-
-			for (int i = 0; i < 181; i++)
+			if (bitmap[x, y] != 0)
 			{
-				int rho = (int)((x * table[i].cosT + y * table[i].sinT)) + (houghSpace.Height() / 2);
-				unsigned char g = houghSpace[i, rho] + 1;
-				if (g > maxT)
-				{
-					maxT = g;
-					xpoint = i;
+				int x_dif = x - center_x, y_dif = y - center_y;
+				for (int t = 0; t < degrees; t++)
+				{					
+					double r = round(x_dif * caches[t].cosT + y_dif * caches[t].sinT + hough_h);
+					Point p = Point(t, r);
+					accumulator[p] = accumulator[p] + 1;
 				}
-				houghSpace[i, rho] = g;
 			}
 		}
+	return accumulator;
 }
 
+std::vector<Line> HoughTransformator::GetLines(int threshold)
+{
+	std::vector<Line> lines = std::vector<Line>();
+
+	int accu_h = accumulator.Height();
+	int accu_w = accumulator.Width();
+	int bitmap_h2 = bitmap.Height() / 2;
+	int bitmap_w2 = bitmap.Width() / 2;
+	int accu_h2 = accu_h / 2;
+
+	for (int r = 0; r < accu_h; r++)
+	{
+		for (int t = 0; t < accu_w; t++)
+		{
+			Point current = Point(t, r);
+			if (accumulator[current] >= threshold)
+			{
+				int max = accumulator[current];
+				for (int ly = -4; ly <= 4; ly++)		
+					for (int lx = -4; lx <= 4; lx++)
+						if ((ly + r >= 0 && ly + r < accu_h) && (lx + t >= 0 && lx + t < accu_w))
+						{
+							if (accumulator[lx, ly] > max) max = accumulator[lx, ly];
+							ly = lx = 5;
+						}						
+
+				if (max > accumulator[current]) continue;
+
+				double x1, x2, y1, y2;
+				double sint = caches[t].sinT;
+				double cost = caches[t].cosT;
+
+				if (t >= 45 && t <= 45 * 3)
+				{
+					x1 = 0;
+					y1 = ((double)(r - accu_h2) - ((x1 - bitmap_w2) * cost)) / sint + bitmap_h2;
+
+					x2 = bitmap.Width();
+					y2 = ((double)(r - accu_h2) - ((x2 - bitmap_w2) * cost)) / sint + bitmap_h2;
+				}
+				else
+				{
+					y1 = 0;
+					x1 = ((double)(r - accu_h2) - ((y1 - bitmap_h2) * sint)) / cost + bitmap_w2;
+
+					y2 = bitmap.Height();
+					x2 = ((double)(r - accu_h2) - ((y2 - bitmap_h2) * sint)) / cost + bitmap_w2;
+				}
+				lines.push_back(Line(Point(x1, y1), Point(x2, y2)));
+			}
+		}
+	}
+	return lines;
+}
