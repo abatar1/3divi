@@ -5,7 +5,6 @@
 
 class HoughTransformator
 {
-private:
 	struct Cache
 	{
 		double sinT;
@@ -14,14 +13,16 @@ private:
 		Cache(double theta);
 		Cache();
 	};
-	const int degrees = 180;
+
+	const int step;
 	Matrix<int> accumulator;
 	std::vector<Cache> caches;
 	Bitmap bitmap;	
 
 	std::vector<Line> GetMaxNLines(std::vector<Line>, int n);
+	std::vector<Line> RemoveAccumulations(std::vector<Line> lines, int threshold);
 public:
-	HoughTransformator(Bitmap bitmap);
+	HoughTransformator(Bitmap bitmap, int step);
 	Matrix<int> Transform();
-	std::vector<Line> GetLines(int threshold);
+	std::vector<Line> GetLines(int threshold);	
 };

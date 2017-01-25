@@ -9,10 +9,10 @@ public:
 
 	Point(double _x, double _y);
 	Point();
-	Point(const int fieldSize);
+	explicit Point(const int fieldSize);
 
-	Point operator-(const Point& a);
-	bool operator==(const Point& a);
+	Point operator-(const Point& a) const;
+	bool operator==(const Point& a) const;
 
-	std::string ToString();
+	std::string ToString() const;
 };

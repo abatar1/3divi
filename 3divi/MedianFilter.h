@@ -1,5 +1,4 @@
 #pragma once
-#include <algorithm>
 #include "Bitmap.h"
 
 class MedianFilter

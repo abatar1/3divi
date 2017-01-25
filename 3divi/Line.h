@@ -14,5 +14,6 @@ public:
 	void RotateX();
 	void RotateY();
 
-	const bool operator<(Line& a);
+	bool operator==(Line& a);
+	bool operator<(Line& a);
 };

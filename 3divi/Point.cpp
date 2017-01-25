@@ -14,17 +14,17 @@ Point::Point(int fieldSize)
 	x = distr(m1), y = distr(m2);
 }
 
-Point Point::operator-(const Point& a)
+Point Point::operator-(const Point& a) const
 {
 	return Point(x - a.x, y - a.y);
 }
 
-bool Point::operator==(const Point& a)
+bool Point::operator==(const Point& a) const
 {
 	return x == a.x && y == a.y;
 }
 
-std::string Point::ToString()
+std::string Point::ToString() const
 {
 	return std::to_string(x) + " " + std::to_string(y);
 }

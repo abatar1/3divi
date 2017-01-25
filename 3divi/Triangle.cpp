@@ -54,9 +54,9 @@ Point Triangle::FindIntersection(Line ab, Line bc)
 	return Point(ab.start.x + (t * s1.x), ab.start.y + (t * s1.y));
 }
 
-Triangle Triangle::GetFromBitmap(Bitmap bitmap, int threshold)
+Triangle Triangle::GetFromBitmap(Bitmap bitmap, int step, int threshold)
 {
-	HoughTransformator ht = HoughTransformator(bitmap);
+	HoughTransformator ht = HoughTransformator(bitmap, step);
 	Matrix<int> accum = ht.Transform();
 	std::vector<Line> lines = ht.GetLines(threshold);
 	Point a = FindIntersection(lines[0], lines[1]);
@@ -66,11 +66,9 @@ Triangle Triangle::GetFromBitmap(Bitmap bitmap, int threshold)
 	return Triangle(a, b, c);
 }
 
-void Triangle::ToString()
+std::string Triangle::ToString()
 {
-	std::cout << a.ToString() << std::endl;
-	std::cout << b.ToString() << std::endl;
-	std::cout << c.ToString() << std::endl;
+	return a.ToString() + "\n" + b.ToString() + "\n" + c.ToString() + "\n";
 }
 
 void Triangle::ToFile(std::string filename)

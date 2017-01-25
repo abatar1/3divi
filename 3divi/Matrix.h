@@ -17,7 +17,7 @@ protected:
 
 		Proxy(Matrix& _bitmap, Point _indexer) : b(_bitmap), indexer(_indexer) { }
 
-		operator int()
+		operator int() const
 		{
 			return b.matrix[int(indexer.y)][int(indexer.x)];
 		}
@@ -27,7 +27,6 @@ protected:
 			return b.matrix[int(indexer.y)][int(indexer.x)] = other;
 		};
 	};
-
 public:
 	Matrix() : width(0) , height(0)
 	{
@@ -49,17 +48,17 @@ public:
 		return *this;
 	}
 
-	typename Proxy operator[](Point indexer)
+	Proxy operator[](Point indexer)
 	{
 		return Proxy(*this, indexer);
 	}
 
-	int Width()
+	int Width() const
 	{
 		return width;
 	}
 
-	int Height()
+	int Height() const
 	{
 		return height;
 	}

@@ -53,7 +53,7 @@ void Bitmap::ReadFromPGM(string filename)
 	f.ignore(256, '\n');
 	f.ignore(256, '\n');
 	for (int i = 0; i < height; i++)
-		f.read((char*)&matrix[i][0], width * sizeof(unsigned char));
+		f.read(reinterpret_cast<char*>(&matrix[i][0]), width * sizeof(unsigned char));
 
 	f.close();
 }

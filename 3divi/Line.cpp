@@ -12,19 +12,24 @@ double Line::Length()
 
 void Line::RotateX()
 {
-	Point tmp = start;
+	auto tmp = start;
 	start = end;
 	end = tmp;
 }
 
 void Line::RotateY()
 {
-	Point tmp = start;
+	auto tmp = start;
 	start = Point(end.y, end.x);
 	end = Point(tmp.y, tmp.x);
 }
 
-const bool Line::operator<(Line& a)
+bool Line::operator==(Line& a)
+{
+	return a.end == end && a.start == start;
+}
+
+bool Line::operator<(Line& a)
 {
 	return Length() < a.Length();
 }

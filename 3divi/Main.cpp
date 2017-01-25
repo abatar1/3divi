@@ -6,33 +6,34 @@
 
 int main(int argc, char* argv[])
 {
-	const int fieldSize = 500;
-	double prob = 0.1;
+	const auto fieldSize = 500;
+	auto prob = 0.0;
 	clock_t timer1, timer2;
 	/*if (argv[1] == "generator")
 	{*/
 		timer1 = clock();
 
-		Bitmap bitmap = Bitmap(fieldSize, fieldSize);
-		Triangle triangle = Triangle(fieldSize);
+		auto bitmap = Bitmap(fieldSize, fieldSize);
+		auto triangle = Triangle(fieldSize);
 		bitmap = triangle.DrawOn(bitmap);
 		bitmap.Noise(prob);
 		bitmap.WriteToPGM("image.pgm");
 
 		timer2 = clock();
+		std::cout << triangle.ToString();
 		std::cout << (timer2 - timer1) / (CLOCKS_PER_SEC / 1000) << "ms" << std::endl;
 	/*}
 	else if (argv[1] == "restore")
 	{*/
 		timer1 = clock();
 
-		Bitmap newBitmap = Bitmap(fieldSize, fieldSize);
+		auto newBitmap = Bitmap(fieldSize, fieldSize);
 		newBitmap.ReadFromPGM("image.pgm");
-		MainFilter mFilter = MainFilter(newBitmap);
+		auto mFilter = MainFilter(newBitmap);
 		newBitmap = mFilter.Process();
-		Triangle triangle1 = Triangle();
-		triangle.GetFromBitmap(newBitmap, 10);	
-		triangle.ToFile("output.txt");
+		auto triangle1 = Triangle();
+		triangle1.GetFromBitmap(newBitmap, 4, 150);	
+		triangle1.ToFile("output.txt");
 
 		timer2 = clock();
 		std::cout << (timer2 - timer1) / (CLOCKS_PER_SEC / 1000) << "ms" << std::endl;

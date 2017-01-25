@@ -1,4 +1,5 @@
 #include "MedianFilter.h"
+#include <algorithm>
 
 MedianFilter::MedianFilter(Bitmap _bitmap, int _step, int _thresold, int _count)
 	:bitmap(_bitmap), step(_step), thresold(_thresold), count(_count) { }
