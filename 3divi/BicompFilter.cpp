@@ -32,7 +32,7 @@ int BicompFilter::FloodFill(int currentColor, Point pivot)
 			for (int x = std::max(int(current.x) - step, 0); x < std::min(int(current.x) + step, bitmap.Width()); x++)
 				for (int y = std::max(int(current.y) - step, 0); y < std::min(int(current.y) + step, bitmap.Height()); y++)
 				{
-					Point p = Point(x, y);
+					auto p = Point(x, y);
 					if (CheckPoint(p))
 					{
 						allowedNeighbors.push_back(p);

@@ -6,8 +6,8 @@
 
 int main(int argc, char* argv[])
 {
-	const auto fieldSize = 500;
-	auto prob = 0.0;
+	const int fieldSize = 500;
+	double prob = 0.0;
 	clock_t timer1, timer2;
 	/*if (argv[1] == "generator")
 	{*/

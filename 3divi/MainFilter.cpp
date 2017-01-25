@@ -6,8 +6,8 @@ MainFilter::MainFilter(Bitmap _bitmap) : bitmap(_bitmap) { }
 
 Bitmap MainFilter::Process()
 {
-	double noise = bitmap.GetNoise();
-	Bitmap result = bitmap;
+	auto noise = bitmap.GetNoise();
+	auto result = bitmap;
 	int n;
 
 	if (noise == 0) n = 0;
@@ -19,10 +19,10 @@ Bitmap MainFilter::Process()
 
 	for (int i = 0; i < n; i++)
 	{		
-		MedianFilter mfilter = MedianFilter(result, 2, 6, 2);
+		auto mfilter = MedianFilter(result, 2, 6, 2);
 		result = mfilter.Process();
 	
-		BicompFilter bfilter = BicompFilter(result, 3, 0);
+		auto bfilter = BicompFilter(result, 3, 0);
 		result = bfilter.Process();
 
 		mfilter = MedianFilter(result, 2, 6, 2);

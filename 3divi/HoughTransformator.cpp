@@ -1,6 +1,7 @@
 #include <algorithm>
 #include "Matrix.h"
 #include "HoughTransformator.h"
+#include "WuDrawer.h"
 
 #define DEG2RAD 0.017453293f
 #define DEGREES 180
@@ -83,7 +84,7 @@ std::vector<Line> HoughTransformator::GetLines(int threshold)
 					x1 = 0;
 					y1 = (r - accu_h2 - (x1 - bitmap_w2) * cost) / sint + bitmap_h2;
 
-					x2 = bitmap.Width();
+					x2 = bitmap.Width() - 1;
 					y2 = (r - accu_h2 - (x2 - bitmap_w2) * cost) / sint + bitmap_h2;
 				}
 				else
@@ -91,7 +92,7 @@ std::vector<Line> HoughTransformator::GetLines(int threshold)
 					y1 = 0;
 					x1 = (r - accu_h2 - (y1 - bitmap_h2) * sint) / cost + bitmap_w2;
 
-					y2 = bitmap.Height();
+					y2 = bitmap.Height() - 1;
 					x2 = (r - accu_h2 - (y2 - bitmap_h2) * sint) / cost + bitmap_w2;
 				}
 				lines.push_back(Line(Point(x1, y1), Point(x2, y2)));
@@ -99,12 +100,15 @@ std::vector<Line> HoughTransformator::GetLines(int threshold)
 		}
 	}
 
-	lines = RemoveAccumulations(lines, 5);
-	lines = GetMaxNLines(lines, 3);
+	//lines = RemoveAccumulations(lines, 5);
+	//lines = GetMaxNLines(lines, 3);
+	auto test = Bitmap(500, 500);
+	auto dr = WuDrawer(test);
+	dr.Process(lines);
+	test.WriteToPGM("test.pgm");
+
 	return lines;
 }
-
-
 
 std::vector<Line> HoughTransformator::RemoveAccumulations(std::vector<Line> lines, int threshold)
 {

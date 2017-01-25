@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 #include "Point.h"
 #include "Bitmap.h"
 #include "Line.h"
@@ -14,4 +15,5 @@ public:
 	Bitmap bitmap;
 	WuDrawer(Bitmap _bitmap);
 	void Process(Line line);
+	void Process(std::vector<Line> lines);
 };

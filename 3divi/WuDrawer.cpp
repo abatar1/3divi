@@ -81,3 +81,10 @@ void WuDrawer::Process(Line line)
 		}
 	}
 }
+
+void WuDrawer::Process(std::vector<Line> lines)
+{
+	for (auto line : lines)
+		Process(line);
+}
+

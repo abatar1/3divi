@@ -1,6 +1,5 @@
 #pragma once
 #include "Point.h"
-#include "Line.h"
 #include "Bitmap.h"
 
 class Triangle
@@ -10,8 +9,6 @@ class Triangle
 	Point c;
 
 	Triangle(Point _a, Point _b, Point _c);
-	double FindAngle(Line ab, Line bc);
-	static Point FindIntersection(Line ab, Line bc);
 public:
 	Triangle();
 	explicit Triangle(const int fieldSize);
