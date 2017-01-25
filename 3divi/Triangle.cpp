@@ -23,7 +23,7 @@ bool Triangle::IsAllowed()
 	auto BC = Line(b, c);
 	if (AB.Length() < 100 || AC.Length() < 100 || BC.Length() < 100)
 		return false;
-	if (AB.FindAngle(AC) < 30 || AB.FindAngle(BC) < 30 || AC.FindAngle(BC) < 30)
+	if (AB.AngleWith(AC) < 30 || AB.AngleWith(BC) < 30 || AC.AngleWith(BC) < 30)
 		return false;
 	return true;
 }
@@ -42,9 +42,9 @@ Triangle Triangle::GetFromBitmap(Bitmap bitmap, int step, int threshold)
 	auto ht = HoughTransformator(bitmap, step);
 	auto accum = ht.Transform();
 	auto lines = ht.GetLines(threshold);
-	auto a = lines[0].FindIntersection(lines[1]);
-	auto b = lines[0].FindIntersection(lines[2]);
-	auto c = lines[1].FindIntersection(lines[2]);
+	auto a = lines[0].IntersectionWith(lines[1]);
+	auto b = lines[0].IntersectionWith(lines[2]);
+	auto c = lines[1].IntersectionWith(lines[2]);
 
 	return Triangle(a, b, c);
 }

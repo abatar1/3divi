@@ -26,14 +26,14 @@ void Line::RotateY()
 	end = Point(tmp.y, tmp.x);
 }
 
-double Line::FindAngle(Line other)
+double Line::AngleWith(Line other)
 {
 	auto AB = end - start;
 	auto BC = other.end - other.start;
 	return acos(abs(AB.x*BC.x + AB.y*BC.y) / (sqrt(pow(AB.x, 2) + pow(AB.y, 2)) * sqrt(pow(BC.x, 2) + pow(BC.y, 2)))) * 180.0 / M_PI;
 }
 
-Point Line::FindIntersection(Line other)
+Point Line::IntersectionWith(Line other)
 {
 	auto s1 = end - start;
 	auto s2 = other.end - other.start;

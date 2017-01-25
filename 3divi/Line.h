@@ -13,8 +13,8 @@ public:
 	double Length();
 	void RotateX();
 	void RotateY();
-	double FindAngle(Line other);
-	Point FindIntersection(Line other);
+	double AngleWith(Line other);
+	Point IntersectionWith(Line other);
 
 	bool operator==(Line& a);
 	bool operator<(Line& a);
