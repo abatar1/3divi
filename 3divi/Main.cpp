@@ -31,7 +31,7 @@ int main(int argc, char* argv[])
 		MainFilter mFilter = MainFilter(newBitmap);
 		newBitmap = mFilter.Process();
 		Triangle triangle1 = Triangle();
-		triangle.GetFromBitmap(newBitmap, 175);	
+		triangle.GetFromBitmap(newBitmap, 10);	
 		triangle.ToFile("output.txt");
 
 		timer2 = clock();

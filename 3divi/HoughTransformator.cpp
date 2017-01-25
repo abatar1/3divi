@@ -22,12 +22,12 @@ HoughTransformator::HoughTransformator(Bitmap _bitmap) : bitmap(_bitmap)
 	int bitmapW = bitmap.Width();
 	int hough_h = (int)((sqrt(2) * (double)(bitmapH > bitmapW ? bitmapH : bitmapW)) / 2);
 
-	accumulator = Matrix<unsigned int>(degrees, hough_h * 2);
+	accumulator = Matrix<int>(degrees, hough_h * 2);
 	caches = std::vector<Cache>(degrees);
 	for (int i = 0; i < degrees; i++) caches[i] = Cache(i);
 }
 
-Matrix<unsigned int> HoughTransformator::Transform()
+Matrix<int> HoughTransformator::Transform()
 {
 	int center_x = bitmap.Width() / 2;
 	int center_y = bitmap.Height() / 2;
@@ -53,30 +53,27 @@ Matrix<unsigned int> HoughTransformator::Transform()
 std::vector<Line> HoughTransformator::GetLines(int threshold)
 {
 	std::vector<Line> lines = std::vector<Line>();
-
-	int accu_h = accumulator.Height();
-	int accu_w = accumulator.Width();
 	int bitmap_h2 = bitmap.Height() / 2;
 	int bitmap_w2 = bitmap.Width() / 2;
-	int accu_h2 = accu_h / 2;
+	int accu_h2 = accumulator.Height() / 2;
 
-	for (int r = 0; r < accu_h; r++)
+	for (int r = 0; r < accumulator.Height(); r++)
 	{
-		for (int t = 0; t < accu_w; t++)
+		for (int t = 0; t < accumulator.Width(); t++)
 		{
-			Point current = Point(t, r);
-			if (accumulator[current] >= threshold)
+			if (accumulator[t, r] >= threshold)
 			{
-				int max = accumulator[current];
+				int max = accumulator[t, r];
 				for (int ly = -4; ly <= 4; ly++)		
 					for (int lx = -4; lx <= 4; lx++)
-						if ((ly + r >= 0 && ly + r < accu_h) && (lx + t >= 0 && lx + t < accu_w))
+						if ((ly + r >= 0 && ly + r < accumulator.Height()) && (lx + t >= 0 && lx + t < accumulator.Width()))
 						{
-							if (accumulator[lx, ly] > max) max = accumulator[lx, ly];
+							if (accumulator[t + lx, r + ly] > max)
+								max = accumulator[t + lx, r + ly];
 							ly = lx = 5;
 						}						
 
-				if (max > accumulator[current]) continue;
+				if (max > accumulator[t, r]) continue;
 
 				double x1, x2, y1, y2;
 				double sint = caches[t].sinT;
@@ -102,5 +99,12 @@ std::vector<Line> HoughTransformator::GetLines(int threshold)
 			}
 		}
 	}
+	return GetMaxNLines(lines, 3);
+}
+
+std::vector<Line> HoughTransformator::GetMaxNLines(std::vector<Line> lines, int n)
+{
+	std::sort(lines.begin(), lines.end());
+	lines.resize(n);
 	return lines;
 }

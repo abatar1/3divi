@@ -3,6 +3,8 @@
 
 Line::Line(Point _start, Point _end) : start(_start), end(_end) {}
 
+Line::Line() : start(Point()), end(Point()) {}
+
 double Line::Length()
 {
 	return sqrt(pow(start.x - end.x, 2) + pow(start.y - end.y, 2));
@@ -20,4 +22,9 @@ void Line::RotateY()
 	Point tmp = start;
 	start = Point(end.y, end.x);
 	end = Point(tmp.y, tmp.x);
+}
+
+const bool Line::operator<(Line& a)
+{
+	return Length() < a.Length();
 }

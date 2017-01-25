@@ -57,7 +57,7 @@ Point Triangle::FindIntersection(Line ab, Line bc)
 Triangle Triangle::GetFromBitmap(Bitmap bitmap, int threshold)
 {
 	HoughTransformator ht = HoughTransformator(bitmap);
-	Matrix<unsigned int> accum = ht.Transform();
+	Matrix<int> accum = ht.Transform();
 	std::vector<Line> lines = ht.GetLines(threshold);
 	Point a = FindIntersection(lines[0], lines[1]);
 	Point b = FindIntersection(lines[0], lines[2]);

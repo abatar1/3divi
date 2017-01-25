@@ -15,11 +15,13 @@ private:
 		Cache();
 	};
 	const int degrees = 180;
-	Matrix<unsigned int> accumulator;
+	Matrix<int> accumulator;
 	std::vector<Cache> caches;
 	Bitmap bitmap;	
+
+	std::vector<Line> GetMaxNLines(std::vector<Line>, int n);
 public:
 	HoughTransformator(Bitmap bitmap);
-	Matrix<unsigned int> Transform();
+	Matrix<int> Transform();
 	std::vector<Line> GetLines(int threshold);
 };
