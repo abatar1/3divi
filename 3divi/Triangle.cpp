@@ -3,6 +3,7 @@
 #include "Triangle.h"
 #include "WuDrawer.h"
 #include "HoughTransformator.h"
+#include <algorithm>
 
 Triangle::Triangle() : a(0), b(0), c(0) {}
 
@@ -37,16 +38,14 @@ Bitmap Triangle::DrawOn(Bitmap bitmap)
 	return drawer.bitmap;
 }
 
-Triangle Triangle::GetFromBitmap(Bitmap bitmap, int step, int threshold)
+void Triangle::GetFromBitmap(Bitmap bitmap, int step, int threshold)
 {
-	auto ht = HoughTransformator(bitmap, step);
+	auto ht = HoughTransformator(bitmap, step, threshold);
 	auto accum = ht.Transform();
-	auto lines = ht.GetLines(threshold);
-	auto a = lines[0].IntersectionWith(lines[1]);
-	auto b = lines[0].IntersectionWith(lines[2]);
-	auto c = lines[1].IntersectionWith(lines[2]);
-
-	return Triangle(a, b, c);
+	auto lines = ht.GetLines();
+	a = lines[0].IntersectionWith(lines[1]);
+	b = lines[0].IntersectionWith(lines[2]);
+	c = lines[1].IntersectionWith(lines[2]);
 }
 
 std::string Triangle::ToString()

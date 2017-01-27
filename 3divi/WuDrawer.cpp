@@ -21,7 +21,7 @@ WuDrawer::WuDrawer(Bitmap _bitmap) : bitmap(_bitmap) { }
 
 void WuDrawer::Plot(Point pos, double c)
 {
-	bitmap[pos] = unsigned char((1 - c) * 255);
+	bitmap[pos] = unsigned char((1 - c) * Bitmap::MAX_COLOR);
 }
 
 double WuDrawer::HandleEndpoint(Point point, double gradient, bool steep, Point& pxl)
@@ -80,11 +80,5 @@ void WuDrawer::Process(Line line)
 			intery = intery + gradient;
 		}
 	}
-}
-
-void WuDrawer::Process(std::vector<Line> lines)
-{
-	for (auto line : lines)
-		Process(line);
 }
 

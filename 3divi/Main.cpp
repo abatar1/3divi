@@ -1,5 +1,3 @@
-#include <iostream>
-#include <time.h>
 #include "Bitmap.h"
 #include "Triangle.h"
 #include "MainFilter.h"
@@ -7,36 +5,24 @@
 int main(int argc, char* argv[])
 {
 	const int fieldSize = 500;
-	double prob = 0.0;
-	clock_t timer1, timer2;
-	/*if (argv[1] == "generator")
-	{*/
-		timer1 = clock();
+	auto bitmap = Bitmap(fieldSize, fieldSize);
 
-		auto bitmap = Bitmap(fieldSize, fieldSize);
+	if (!strcmp(argv[1], "generator"))
+	{
+		auto prob = strtod(argv[2], nullptr);
 		auto triangle = Triangle(fieldSize);
 		bitmap = triangle.DrawOn(bitmap);
 		bitmap.Noise(prob);
 		bitmap.WriteToPGM("image.pgm");
-
-		timer2 = clock();
-		std::cout << triangle.ToString();
-		std::cout << (timer2 - timer1) / (CLOCKS_PER_SEC / 1000) << "ms" << std::endl;
-	/*}
-	else if (argv[1] == "restore")
-	{*/
-		timer1 = clock();
-
-		auto newBitmap = Bitmap(fieldSize, fieldSize);
-		newBitmap.ReadFromPGM("image.pgm");
-		auto mFilter = MainFilter(newBitmap);
-		newBitmap = mFilter.Process();
-		auto triangle1 = Triangle();
-		triangle1.GetFromBitmap(newBitmap, 4, 150);	
-		triangle1.ToFile("output.txt");
-
-		timer2 = clock();
-		std::cout << (timer2 - timer1) / (CLOCKS_PER_SEC / 1000) << "ms" << std::endl;
-	/*}*/
+	}
+	else if (!strcmp(argv[1], "restore"))
+	{
+		bitmap.ReadFromPGM(argv[2]);
+		auto mFilter = MainFilter(bitmap);
+		bitmap = mFilter.Process();
+		auto triangle = Triangle();
+		triangle.GetFromBitmap(bitmap, 4, 100);	
+		triangle.ToFile("output.txt");
+	}
 	return 0;
 }

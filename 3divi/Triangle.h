@@ -14,7 +14,7 @@ public:
 	explicit Triangle(const int fieldSize);
 	bool IsAllowed();
 	Bitmap DrawOn(Bitmap bitmap);
-	Triangle GetFromBitmap(Bitmap bitmap, int step, int threshold);
+	void GetFromBitmap(Bitmap bitmap, int step, int threshold);
 	std::string ToString();
 	void ToFile(std::string filename);
 };

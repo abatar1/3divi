@@ -15,5 +15,4 @@ public:
 	Bitmap bitmap;
 	WuDrawer(Bitmap _bitmap);
 	void Process(Line line);
-	void Process(std::vector<Line> lines);
 };

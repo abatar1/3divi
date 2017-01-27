@@ -3,18 +3,18 @@
 #include <cmath>
 #include "Bitmap.h"
 
-using namespace std;
+Bitmap::Bitmap(const int _width, const int _height) : Matrix::Matrix(_width, _height) {}
 
-Bitmap::Bitmap(const int _width, const int _height) : Matrix::Matrix(_width, _height) { }
+Bitmap::Bitmap() {}
 
 void Bitmap::Noise(const double prob)
 {
 	if (!prob) return;
 
-	random_device rd;
-	mt19937 m(rd());
-	uniform_real<double> distr1(0, 1);
-	uniform_int<int> distr2(0, 255);
+	std::random_device rd;
+	std::mt19937 m(rd());
+	std::uniform_real<double> distr1(0, 1);
+	std::uniform_int<int> distr2(0, MAX_COLOR);
 	for (int i = 0; i < height; i++)
 		for (int j = 0; j < width; j++)
 			if (distr1(m) - prob < 0) matrix[i][j] = distr2(m);
@@ -28,14 +28,13 @@ double Bitmap::GetNoise() const
 	for (int x = 0; x < width; x++)
 		for (int y = 0; y < height; y++) sb += matrix[y][x];
 
-	return floor(sb / n / 255 * 2 * 100) / 100;
+	return floor(sb / n / MAX_COLOR * 2 * 100) / 100;
 }
 
-void Bitmap::WriteToPGM(string filename)
+void Bitmap::WriteToPGM(std::string filename)
 {
-	ofstream f(filename, ios_base::out | ios_base::binary);
-	int maxColorValue = 255;
-	f << "P5\r\n" << width << " " << height << "\r\n" << maxColorValue << "\r\n";
+	std::ofstream f(filename, std::ios_base::out | std::ios_base::binary);
+	f << "P5\r\n" << width << " " << height << "\r\n" << MAX_COLOR << "\r\n";
 
 	for (auto line : matrix)
 		for (auto point : line)
@@ -44,10 +43,9 @@ void Bitmap::WriteToPGM(string filename)
 	f.close();
 }
 
-void Bitmap::ReadFromPGM(string filename)
+void Bitmap::ReadFromPGM(std::string filename)
 {
-	ifstream f(filename, ios_base::in | ios_base::binary);
-	string inputline;
+	std::ifstream f(filename, std::ios_base::in | std::ios_base::binary);
 
 	f.ignore(256, '\n');
 	f.ignore(256, '\n');

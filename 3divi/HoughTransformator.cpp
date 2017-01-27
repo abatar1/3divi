@@ -18,11 +18,9 @@ HoughTransformator::Cache::Cache()
 	cosT = 0;
 }
 
-HoughTransformator::HoughTransformator(Bitmap _bitmap, const int _step) : bitmap(_bitmap), step(_step)
+HoughTransformator::HoughTransformator(Bitmap _bitmap, const int _step, int _threshold) : threshold(_threshold), step(_step), bitmap(_bitmap)
 {
-	int D = static_cast<int>(sqrt(pow(bitmap.Width(), 2) + pow(bitmap.Height(), 2)));
-	int hough_h = static_cast<int>(sqrt(2) * D * 2) + 1;
-
+	int hough_h = static_cast<int>(sqrt(2.0) * (bitmap.Height() > bitmap.Width() ? bitmap.Height() : bitmap.Width()) / 2.0);
 	accumulator = Matrix<int>(DEGREES, hough_h * 2);
 	caches = std::vector<Cache>(DEGREES);
 	for (int i = 0; i < DEGREES; i++) caches[i] = Cache(i);
@@ -37,107 +35,73 @@ Matrix<int> HoughTransformator::Transform()
 	for (int y = 0; y < bitmap.Height(); y++)
 		for (int x = 0; x < bitmap.Width(); x++)
 		{
-			if (bitmap[Point(x, y)] != 0)
+			if (!bitmap[Point(x, y)]) continue;
+			
+			int x_dif = x - center_x, y_dif = y - center_y;
+			for (int t = 0; t < DEGREES; t++)
 			{
-				int x_dif = x - center_x, y_dif = y - center_y;
-				for (int t = 0; t < DEGREES; t++)
-				{
-					double r = round(x_dif * caches[t].cosT + y_dif * caches[t].sinT + accu_h2);
-					accumulator[Point(t, r)] = accumulator[Point(t, r)] + 1;
-				}
-			}
+				double r = round(x_dif * caches[t].cosT + y_dif * caches[t].sinT + accu_h2);
+				accumulator[Point(t, r)] = accumulator[Point(t, r)] + 1;
+			}		
 		}
 	return accumulator;
 }
 
-std::vector<Line> HoughTransformator::GetLines(int threshold)
+std::vector<Line> HoughTransformator::GetLines()
 {
 	auto lines = std::vector<Line>();
 	int bitmap_h2 = bitmap.Height() / 2;
 	int bitmap_w2 = bitmap.Width() / 2;
 	int accu_h2 = accumulator.Height() / 2;
 
-	for (int r = 0; r < accumulator.Height(); r++)
+	while (true)
 	{
-		for (int t = 0; t < accumulator.Width(); t++)
+		for (int r = 0; r < accumulator.Height(); r++)
 		{
-			if (accumulator[Point(t, r)] >= threshold)
+			for (int t = 0; t < accumulator.Width(); t++)
 			{
-				int max = accumulator[Point(t, r)];
-				for (int ly = -step; ly <= step; ly++)		
-					for (int lx = -step; lx <= step; lx++)
-						if (ly + r >= 0 && ly + r < accumulator.Height() && (lx + t >= 0 && lx + t < accumulator.Width()))
-						{
-							if (accumulator[Point(t + lx, r + ly)] > max)
-								max = accumulator[Point(t + lx, r + ly)];
-							ly = lx = 5;
-						}						
-
-				if (max > accumulator[Point(t, r)]) continue;
-
-				double x1, x2, y1, y2;
-				double sint = caches[t].sinT;
-				double cost = caches[t].cosT;
-
-				if (t >= DEGREES / 4 && t <= DEGREES / 4 * 3)
+				if (accumulator[Point(t, r)] >= threshold)
 				{
-					x1 = 0;
-					y1 = (r - accu_h2 - (x1 - bitmap_w2) * cost) / sint + bitmap_h2;
+					int max = accumulator[Point(t, r)];
+					for (int ly = -step; ly <= step; ly++)
+						for (int lx = -step; lx <= step; lx++)
+							if (ly + r >= 0 && ly + r < accumulator.Height() && (lx + t >= 0 && lx + t < accumulator.Width()))
+							{
+								if (accumulator[Point(t + lx, r + ly)] > max)
+								{
+									max = accumulator[Point(t + lx, r + ly)];
+									ly = lx = 5;
+								}			
+							}
 
-					x2 = bitmap.Width() - 1;
-					y2 = (r - accu_h2 - (x2 - bitmap_w2) * cost) / sint + bitmap_h2;
-				}
-				else
-				{
-					y1 = 0;
-					x1 = (r - accu_h2 - (y1 - bitmap_h2) * sint) / cost + bitmap_w2;
+					if (max > accumulator[Point(t, r)]) continue;
 
-					y2 = bitmap.Height() - 1;
-					x2 = (r - accu_h2 - (y2 - bitmap_h2) * sint) / cost + bitmap_w2;
+					double x1, y1, x2, y2;
+					double sint = caches[t].sinT;
+					double cost = caches[t].cosT;
+					if (t >= DEGREES / 4 && t <= DEGREES / 4 * 3)
+					{
+						x1 = 0;
+						y1 = (r - accu_h2 - (x1 - bitmap_w2) * cost) / sint + bitmap_h2;
+
+						x2 = bitmap.Width() - 1;
+						y2 = (r - accu_h2 - (x2 - bitmap_w2) * cost) / sint + bitmap_h2;
+					}
+					else
+					{
+						y1 = 0;
+						x1 = (r - accu_h2 - (y1 - bitmap_h2) * sint) / cost + bitmap_w2;
+
+						y2 = bitmap.Height() - 1;
+						x2 = (r - accu_h2 - (y2 - bitmap_h2) * sint) / cost + bitmap_w2;
+					}
+					lines.push_back(Line(Point(x1, y1), Point(x2, y2)));
 				}
-				lines.push_back(Line(Point(x1, y1), Point(x2, y2)));
 			}
 		}
+		if (lines.size() > 3) threshold -= 10;
+		if (lines.size() < 3) threshold += 10;
+		if (lines.size() == 3) break;
 	}
-
-	//lines = RemoveAccumulations(lines, 5);
-	//lines = GetMaxNLines(lines, 3);
-	auto test = Bitmap(500, 500);
-	auto dr = WuDrawer(test);
-	dr.Process(lines);
-	test.WriteToPGM("test.pgm");
-
 	return lines;
-}
-
-std::vector<Line> HoughTransformator::RemoveAccumulations(std::vector<Line> lines, int threshold)
-{
-	auto result = std::vector<Line>(lines);
-	for (size_t i = 0; i < result.size(); i++)
-	{
-		Line current = result[i];
-		for (size_t j = 0; j < result.size(); j++)
-		{
-			if (i == j) continue;
-			if (current == lines[j]) result.erase(result.begin() + j);
-			if (current.start.x == lines[j].start.x)
-			{
-				//if (current.start.y - lines[j].start.y)
-			}
-
-			auto e_dif = current.end - lines[j].end;
-			if (current.end.x != 0 )
-			double xs_dif = current.start.x - lines[j].start.x;
-			double ys_dif = current.start.y - lines[j].start.y;
-		}
-	}
-	return result;
-}
-
-std::vector<Line> HoughTransformator::GetMaxNLines(std::vector<Line> lines, int n)
-{
-	auto result = std::vector<Line>(lines);
-	std::sort(result.begin(), result.end());
-	result.resize(n);
-	return result;
 }
