@@ -14,6 +14,10 @@ class HoughTransformator
 	};
 	int threshold;
 	const int step;
+	int centerA;
+	const int centerBY;
+	const int centerBX;
+	
 	Matrix<int> accumulator;
 	std::vector<Cache> caches;
 	Bitmap bitmap;	

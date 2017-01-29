@@ -15,18 +15,18 @@ void Bitmap::Noise(const double prob)
 	std::mt19937 m(rd());
 	std::uniform_real<double> distr1(0, 1);
 	std::uniform_int<int> distr2(0, MAX_COLOR);
-	for (int i = 0; i < height; i++)
-		for (int j = 0; j < width; j++)
+	for (auto i = 0; i < height; i++)
+		for (auto j = 0; j < width; j++)
 			if (distr1(m) - prob < 0) matrix[i][j] = distr2(m);
 }
 
 double Bitmap::GetNoise() const
 {
-	int n = width * height;
+	auto n = width * height;
 	double sb = 0;
 
-	for (int x = 0; x < width; x++)
-		for (int y = 0; y < height; y++) sb += matrix[y][x];
+	for (auto x = 0; x < width; x++)
+		for (auto y = 0; y < height; y++) sb += matrix[y][x];
 
 	return floor(sb / n / MAX_COLOR * 2 * 100) / 100;
 }
@@ -50,7 +50,7 @@ void Bitmap::ReadFromPGM(std::string filename)
 	f.ignore(256, '\n');
 	f.ignore(256, '\n');
 	f.ignore(256, '\n');
-	for (int i = 0; i < height; i++)
+	for (auto i = 0; i < height; i++)
 		f.read(reinterpret_cast<char*>(&matrix[i][0]), width * sizeof(unsigned char));
 
 	f.close();

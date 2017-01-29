@@ -2,9 +2,7 @@
 
 double WuDrawer::FloatP(double x)
 {
-	if (x < 0)
-		return 1 - (x - int(x));
-	return x - int(x);
+	return x < 0 ? 1 - (x - int(x)) : x - int(x);
 }
 
 double WuDrawer::FloatPR(double x)
@@ -17,7 +15,7 @@ int WuDrawer::Round(double x)
 	return int(x + 0.5);
 }
 
-WuDrawer::WuDrawer(Bitmap _bitmap) : bitmap(_bitmap) { }
+WuDrawer::WuDrawer(Bitmap _bitmap) : bitmap(_bitmap) {}
 
 void WuDrawer::Plot(Point pos, double c)
 {
@@ -26,9 +24,9 @@ void WuDrawer::Plot(Point pos, double c)
 
 double WuDrawer::HandleEndpoint(Point point, double gradient, bool steep, Point& pxl)
 {
-	int xend = Round(point.x);
-	double yend = point.y + gradient*(xend - point.x);
-	double xgap = FloatP(point.x + 0.5);
+	auto xend = Round(point.x);
+	auto yend = point.y + gradient*(xend - point.x);
+	auto xgap = FloatP(point.x + 0.5);
 
 	pxl = Point(xend, int(yend));
 
@@ -47,24 +45,24 @@ double WuDrawer::HandleEndpoint(Point point, double gradient, bool steep, Point&
 
 void WuDrawer::Process(Line line)
 {
-	bool steep = abs(line.end.y - line.start.y) > abs(line.end.x - line.start.x);
+	auto steep = abs(line.end.y - line.start.y) > abs(line.end.x - line.start.x);
 
 	if (steep)
 		line.RotateY();
 	if (line.end.x < line.start.x)
 		line.RotateX();
 
-	double dx = line.end.x - line.start.x;
-	double dy = line.end.y - line.start.y;
-	double gradient = dy / dx;
+	auto dx = line.end.x - line.start.x;
+	auto dy = line.end.y - line.start.y;
+	auto gradient = dy / dx;
 
 	Point xpl1, xpl2;
-	double intery = HandleEndpoint(line.start, gradient, steep, xpl1);
+	auto intery = HandleEndpoint(line.start, gradient, steep, xpl1);
 	HandleEndpoint(line.end, gradient, steep, xpl2);
 
 	if (steep)
 	{
-		for (int x = int(xpl1.x) + 1; x < xpl2.x - 1; x++)
+		for (auto x = int(xpl1.x) + 1; x < xpl2.x - 1; x++)
 		{
 			Plot(Point(int(intery), x), FloatPR(intery));
 			Plot(Point(int(intery) + 1, x), FloatP(intery));
@@ -73,7 +71,7 @@ void WuDrawer::Process(Line line)
 	}
 	else
 	{
-		for (int x = int(xpl1.x) + 1; x < xpl2.x - 1; x++)
+		for (auto x = int(xpl1.x) + 1; x < xpl2.x - 1; x++)
 		{
 			Plot(Point(x, int(intery)), FloatPR(intery));
 			Plot(Point(x, int(intery) + 1), FloatP(intery));
